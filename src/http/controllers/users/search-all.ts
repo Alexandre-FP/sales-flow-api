@@ -4,5 +4,5 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 export async function searchAll(_: FastifyRequest, reply: FastifyReply) {
   const { users } = await makeSearchAllUserUseCase().execute()
 
-  return reply.status(200).send({ users })
+  return reply.status(200).send(users)
 }

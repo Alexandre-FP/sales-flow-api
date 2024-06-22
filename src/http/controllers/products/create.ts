@@ -2,7 +2,10 @@ import { makeCreateProductUseCase } from '@/uses-cases/factories/make-create-pro
 import { z } from 'zod'
 import { FastifyRequest, FastifyReply } from 'fastify'
 
-export async function create(request: FastifyRequest, replfy: FastifyReply) {
+export async function createSale(
+  request: FastifyRequest,
+  replfy: FastifyReply,
+) {
   const createBodySchema = z.object({
     name: z.string(),
     description: z.string(),
@@ -19,5 +22,8 @@ export async function create(request: FastifyRequest, replfy: FastifyReply) {
     valor,
   })
 
-  return replfy.status(201).send()
+  return replfy.status(201).send({
+    success: true,
+    message: 'Produto cadastrado com sucesso',
+  })
 }

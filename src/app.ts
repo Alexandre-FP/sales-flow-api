@@ -25,7 +25,7 @@ app.register(fastifySwagger, {
     ],
     tags: [
       { name: 'user', description: 'User related end-points' },
-      { name: 'code', description: 'Code related end-points' },
+      { name: 'product', description: 'Product related end-points' },
     ],
     components: {
       securitySchemes: {

@@ -3,7 +3,10 @@ import { z } from 'zod'
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { CheckProductExist } from '@/uses-cases/errors/check-product-exist'
 
-export async function update(request: FastifyRequest, reply: FastifyReply) {
+export async function updateProduct(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const updateBodySchema = z.object({
     name: z.string(),
     description: z.string(),

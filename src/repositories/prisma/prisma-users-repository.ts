@@ -12,7 +12,11 @@ export class PrismaUsersRepository implements UsersRository {
   }
 
   async search() {
-    const user = await prisma.user.findMany({})
+    const user = await prisma.user.findMany({
+      where: {
+        deleted_at: null,
+      },
+    })
 
     return user
   }
@@ -39,9 +43,12 @@ export class PrismaUsersRepository implements UsersRository {
   }
 
   async delete(id: string) {
-    await prisma.user.delete({
+    await prisma.user.update({
       where: {
         id,
+      },
+      data: {
+        deleted_at: new Date(),
       },
     })
 

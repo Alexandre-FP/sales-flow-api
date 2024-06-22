@@ -3,6 +3,7 @@ import { FastifyInstance } from 'fastify'
 import { create } from './create'
 import { deleteUser } from './delete'
 import { authenticate } from './authenticate'
+import { update } from './update'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post(
@@ -121,7 +122,7 @@ export async function usersRoutes(app: FastifyInstance) {
         },
       },
     },
-    create,
+    update,
   )
 
   app.delete(

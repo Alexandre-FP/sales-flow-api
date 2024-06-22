@@ -41,6 +41,10 @@ export async function authenticate(
       .status(200)
       .send({
         token,
+        session: {
+          ...user,
+          password: undefined,
+        },
       })
   } catch (error) {
     if (error instanceof InvalidCrendentialsError) {

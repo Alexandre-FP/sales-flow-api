@@ -47,4 +47,14 @@ export class PrismaUsersRepository implements UsersRository {
 
     return null
   }
+
+  async authenticate(number: string) {
+    const user = prisma.user.findUnique({
+      where: {
+        number,
+      },
+    })
+
+    return user
+  }
 }

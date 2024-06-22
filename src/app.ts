@@ -1,9 +1,11 @@
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './env'
-import { usersRoutes } from './http/controllers/users/routes'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
+import { routes } from './http'
+import fastifyJwt from '@fastify/jwt'
+import fastifycookie from '@fastify/cookie'
 
 export const app = fastify()
 
@@ -63,7 +65,20 @@ app.register(fastifySwaggerUi, {
   transformSpecificationClone: true,
 })
 
-app.register(usersRoutes)
+app.register(fastifyJwt, {
+  secret: env.JWT,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m', // 10 minutos
+  },
+})
+
+app.register(fastifycookie)
+
+app.register(routes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

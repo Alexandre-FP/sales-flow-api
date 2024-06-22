@@ -2,8 +2,70 @@ import { searchAll } from './search-all'
 import { FastifyInstance } from 'fastify'
 import { create } from './create'
 import { deleteUser } from './delete'
+import { authenticate } from './authenticate'
 
 export async function usersRoutes(app: FastifyInstance) {
+  app.post(
+    '/authenticate',
+    {
+      schema: {
+        summary: 'Authenticate a user',
+        tags: ['user'],
+        body: {
+          type: 'object',
+          required: ['number', 'password_hash'],
+          properties: {
+            number: { type: 'string' },
+            password_hash: { type: 'string' },
+          },
+        },
+        // response: {
+        //   200: {
+        //     description: 'User created successfully',
+        //     type: 'object',
+        //     properties: {
+        //       success: { type: 'boolean' },
+        //       message: { type: 'string' },
+        //     },
+        //   },
+        // },
+      },
+    },
+    authenticate,
+  )
+
+  app.post(
+    '/users',
+    {
+      schema: {
+        summary: 'Create a new user',
+        tags: ['user'],
+        body: {
+          type: 'object',
+          required: ['name', 'number', 'age', 'valor_reservado_caixa'],
+          properties: {
+            name: { type: 'string' },
+            number: { type: 'string' },
+            password_hash: { type: 'string' },
+            age: { type: 'integer' },
+            valor_reservado_caixa: { type: 'number' },
+          },
+        },
+        response: {
+          201: {
+            description: 'User created successfully',
+            type: 'object',
+            properties: {
+              success: { type: 'boolean' },
+              message: { type: 'string' },
+            },
+          },
+        },
+      },
+    },
+    create,
+  )
+
   app.get(
     '/users',
     {
@@ -31,11 +93,11 @@ export async function usersRoutes(app: FastifyInstance) {
     searchAll,
   )
 
-  app.post(
-    '/users',
+  app.put(
+    '/users/:id',
     {
       schema: {
-        summary: 'Create a new user',
+        summary: 'Updated user',
         tags: ['user'],
         body: {
           type: 'object',
@@ -49,7 +111,7 @@ export async function usersRoutes(app: FastifyInstance) {
         },
         response: {
           201: {
-            description: 'User created successfully',
+            description: 'User updated successfully',
             type: 'object',
             properties: {
               success: { type: 'boolean' },

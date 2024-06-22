@@ -3,7 +3,10 @@ import { z } from 'zod'
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { CheckSaleProductExist } from '@/uses-cases/errors/check-sale-product-exist'
 
-export async function deleteSale(request: FastifyRequest, reply: FastifyReply) {
+export async function deleteProductSale(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const paramsSale = z.object({
     id: z.string(),
   })

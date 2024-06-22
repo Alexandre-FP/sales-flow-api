@@ -2,7 +2,7 @@ import { makeCreateProductUseCase } from '@/uses-cases/factories/make-create-pro
 import { z } from 'zod'
 import { FastifyRequest, FastifyReply } from 'fastify'
 
-export async function createSale(
+export async function createProduct(
   request: FastifyRequest,
   replfy: FastifyReply,
 ) {

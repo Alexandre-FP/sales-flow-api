@@ -2,7 +2,10 @@ import { makeCreateSaleProductUseCase } from '@/uses-cases/factories/make-create
 import { z } from 'zod'
 import { FastifyRequest, FastifyReply } from 'fastify'
 
-export async function create(request: FastifyRequest, reply: FastifyReply) {
+export async function createSaleProduct(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const createBodySchema = z.object({
     quantity: z.number(),
     productId: z.string(),

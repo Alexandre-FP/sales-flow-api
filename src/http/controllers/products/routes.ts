@@ -1,6 +1,6 @@
 import { searchAllProducts } from './search-all'
 import { FastifyInstance } from 'fastify'
-import { createSale } from './create'
+import { createProduct } from './create'
 import { updateProduct } from './update'
 import { deleteProduct } from './delete'
 
@@ -32,7 +32,7 @@ export async function productsRoutes(app: FastifyInstance) {
         },
       },
     },
-    createSale,
+    createProduct,
   )
 
   app.get(

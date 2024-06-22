@@ -1,10 +1,12 @@
 import { SalesProductsRepository } from '../sale-products-repository'
 import { Prisma } from '@prisma/client'
-import { prisma } from '@/lib/prisma'
+import { PrismaService } from '@/lib/prisma'
 
 export class PrismaSalesProductsRepository implements SalesProductsRepository {
+  constructor(private prismaService: PrismaService) {}
+
   async create(data: Prisma.SalesProductsUncheckedCreateInput) {
-    const saleProduct = await prisma.salesProducts.create({
+    const saleProduct = await this.prismaService.salesProducts.create({
       data,
     })
 
@@ -12,13 +14,13 @@ export class PrismaSalesProductsRepository implements SalesProductsRepository {
   }
 
   async search() {
-    const salesProducts = await prisma.salesProducts.findMany({})
+    const salesProducts = await this.prismaService.salesProducts.findMany({})
 
     return salesProducts
   }
 
   async findById(id: string) {
-    const saleProduct = await prisma.salesProducts.findUnique({
+    const saleProduct = await this.prismaService.salesProducts.findUnique({
       where: {
         id,
       },
@@ -28,7 +30,7 @@ export class PrismaSalesProductsRepository implements SalesProductsRepository {
   }
 
   async update(id: string, data: Prisma.SalesProductsUncheckedUpdateInput) {
-    const saleProduct = await prisma.salesProducts.update({
+    const saleProduct = await this.prismaService.salesProducts.update({
       where: {
         id,
       },
@@ -39,7 +41,7 @@ export class PrismaSalesProductsRepository implements SalesProductsRepository {
   }
 
   async delete(id: string) {
-    await prisma.salesProducts.delete({
+    await this.prismaService.salesProducts.delete({
       where: {
         id,
       },

@@ -1,10 +1,12 @@
 import { Prisma } from '@prisma/client'
 import { ProductsRository } from '../products-repository'
-import { prisma } from '@/lib/prisma'
+import { PrismaService } from '@/lib/prisma'
 
 export class PrismaProductsRepository implements ProductsRository {
+  constructor(private prismaService: PrismaService) {}
+
   async create(data: Prisma.ProductsCreateInput) {
-    const product = await prisma.products.create({
+    const product = await this.prismaService.products.create({
       data,
     })
 
@@ -12,13 +14,13 @@ export class PrismaProductsRepository implements ProductsRository {
   }
 
   async search() {
-    const product = await prisma.products.findMany({})
+    const product = await this.prismaService.products.findMany({})
 
     return product
   }
 
   async findById(id: string) {
-    const product = await prisma.products.findUnique({
+    const product = await this.prismaService.products.findUnique({
       where: {
         id,
       },
@@ -28,7 +30,7 @@ export class PrismaProductsRepository implements ProductsRository {
   }
 
   async update(id: string, data: Prisma.ProductsUpdateInput) {
-    const product = await prisma.products.update({
+    const product = await this.prismaService.products.update({
       where: {
         id,
       },
@@ -39,7 +41,7 @@ export class PrismaProductsRepository implements ProductsRository {
   }
 
   async delete(id: string) {
-    await prisma.products.delete({
+    await this.prismaService.products.delete({
       where: {
         id,
       },

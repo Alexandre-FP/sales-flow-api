@@ -4,8 +4,11 @@ import { create } from './create'
 import { deleteUser } from './delete'
 import { authenticate } from './authenticate'
 import { update } from './update'
+import { reports } from './reports'
 
 export async function usersRoutes(app: FastifyInstance) {
+  app.get('/reports', reports)
+
   app.post(
     '/authenticate',
     {

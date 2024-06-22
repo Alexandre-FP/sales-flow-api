@@ -1,5 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 
-export const prisma = new PrismaClient({
-  log: ['query', 'error'],
-})
+export class PrismaService extends PrismaClient {
+  constructor() {
+    super({
+      log: ['query', 'error'],
+    })
+  }
+}

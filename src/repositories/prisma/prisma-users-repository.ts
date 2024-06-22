@@ -1,10 +1,12 @@
 import { Prisma } from '@prisma/client'
 import { UsersRository } from '../users-repositorry'
-import { prisma } from '@/lib/prisma'
+import { PrismaService } from '@/lib/prisma'
 
 export class PrismaUsersRepository implements UsersRository {
+  constructor(private prismaService: PrismaService) {}
+
   async create(data: Prisma.UserCreateInput) {
-    const user = await prisma.user.create({
+    const user = await this.prismaService.user.create({
       data,
     })
 
@@ -12,7 +14,7 @@ export class PrismaUsersRepository implements UsersRository {
   }
 
   async search() {
-    const user = await prisma.user.findMany({
+    const user = await this.prismaService.user.findMany({
       where: {
         deleted_at: null,
       },
@@ -22,7 +24,7 @@ export class PrismaUsersRepository implements UsersRository {
   }
 
   async findById(id: string) {
-    const user = await prisma.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: {
         id,
       },
@@ -32,7 +34,7 @@ export class PrismaUsersRepository implements UsersRository {
   }
 
   async update(id: string, data: Prisma.UserUpdateInput) {
-    const user = await prisma.user.update({
+    const user = await this.prismaService.user.update({
       where: {
         id,
       },
@@ -43,7 +45,7 @@ export class PrismaUsersRepository implements UsersRository {
   }
 
   async delete(id: string) {
-    await prisma.user.update({
+    await this.prismaService.user.update({
       where: {
         id,
       },
@@ -56,7 +58,7 @@ export class PrismaUsersRepository implements UsersRository {
   }
 
   async authenticate(number: string) {
-    const user = prisma.user.findUnique({
+    const user = this.prismaService.user.findUnique({
       where: {
         number,
       },
@@ -64,4 +66,6 @@ export class PrismaUsersRepository implements UsersRository {
 
     return user
   }
+
+  async reports() {} // consulta para relatorios
 }

@@ -1,10 +1,12 @@
-import { prisma } from '@/lib/prisma'
+import { PrismaService } from '@/lib/prisma'
 import { SalesRository } from '../sales-repository'
 import { Prisma } from '@prisma/client'
 
 export class PrismaSalesRepository implements SalesRository {
+  constructor(private prismaService: PrismaService) {}
+
   async create(data: Prisma.SaleUncheckedCreateInput) {
-    const sale = await prisma.sale.create({
+    const sale = await this.prismaService.sale.create({
       data,
     })
 
@@ -12,13 +14,13 @@ export class PrismaSalesRepository implements SalesRository {
   }
 
   async search() {
-    const sale = await prisma.sale.findMany({})
+    const sale = await this.prismaService.sale.findMany({})
 
     return sale
   }
 
   async findById(id: string) {
-    const sale = await prisma.sale.findUnique({
+    const sale = await this.prismaService.sale.findUnique({
       where: {
         id,
       },
@@ -28,7 +30,7 @@ export class PrismaSalesRepository implements SalesRository {
   }
 
   async update(id: string, data: Prisma.SaleUncheckedUpdateInput) {
-    const sale = await prisma.sale.update({
+    const sale = await this.prismaService.sale.update({
       where: {
         id,
       },
@@ -39,7 +41,7 @@ export class PrismaSalesRepository implements SalesRository {
   }
 
   async delete(id: string) {
-    await prisma.sale.delete({
+    await this.prismaService.sale.delete({
       where: {
         id,
       },

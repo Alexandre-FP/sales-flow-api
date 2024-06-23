@@ -17,7 +17,8 @@ export async function productsRoutes(app: FastifyInstance) {
           properties: {
             name: { type: 'string' },
             description: { type: 'string' },
-            valor: { type: 'string' },
+            buyValue: { type: 'number' },
+            sellValue: { type: 'number' },
           },
         },
         response: {

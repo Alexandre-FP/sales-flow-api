@@ -9,17 +9,21 @@ export async function createProduct(
   const createBodySchema = z.object({
     name: z.string(),
     description: z.string(),
-    valor: z.number(),
+    buyValue: z.number(),
+    sellValue: z.number(),
   })
 
-  const { name, description, valor } = createBodySchema.parse(request.body)
+  const { name, description, buyValue, sellValue } = createBodySchema.parse(
+    request.body,
+  )
 
   const createProductUseCase = makeCreateProductUseCase()
 
   await createProductUseCase.execute({
     name,
     description,
-    valor,
+    buyValue,
+    sellValue,
   })
 
   return replfy.status(201).send({

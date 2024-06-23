@@ -4,7 +4,8 @@ import { Products } from '@prisma/client'
 interface ProductUseCaseRequest {
   name: string
   description: string
-  valor: number
+  buyValue: number
+  sellValue: number
 }
 
 interface ProductUseCaseResponse {
@@ -17,12 +18,14 @@ export class CreateProductUseCase {
   async execute({
     name,
     description,
-    valor,
+    buyValue,
+    sellValue,
   }: ProductUseCaseRequest): Promise<ProductUseCaseResponse> {
     const product = await this.productRepository.create({
       name,
       description,
-      valor,
+      buyValue,
+      sellValue,
     })
 
     return {
